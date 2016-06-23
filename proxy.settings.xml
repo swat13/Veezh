@@ -1,0 +1,10 @@
+<application>
+  <component name="HttpConfigurable">
+    <option name="USE_PROXY_PAC" value="true" />
+    <option name="PROXY_HOST" value="localhost" />
+    <option name="PROXY_PORT" value="8580" />
+    <option name="PROXY_LOGIN" value="ir93079" />
+    <option name="PROXY_PASSWORD_CRYPT" value="NTQwMzA3" />
+    <option name="KEEP_PROXY_PASSWORD" value="true" />
+  </component>
+</application>
