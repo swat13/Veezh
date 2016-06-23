@@ -2,18 +2,14 @@ package rbt.mci.com.mci;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.viewpagerindicator.CirclePageIndicator;
-
 import java.util.ArrayList;
 
 import rbt.mci.com.mci.Adapter.CarListAdapter;
-import rbt.mci.com.mci.Adapter.SliderAdapter;
 import rbt.mci.com.mci.Parser.RSSFeed;
 
 public class CarList extends Activity implements View.OnClickListener {
@@ -57,13 +53,13 @@ public class CarList extends Activity implements View.OnClickListener {
         for (int i = 0; i < IMAGES.length; i++)
             ImagesArray.add(IMAGES[i]);
 
-        ViewPager mPager = (ViewPager) findViewById(R.id.slidePager);
+        /*ViewPager mPager = (ViewPager) findViewById(R.id.slidePager);
         CirclePageIndicator indicator = (CirclePageIndicator) findViewById(R.id.indicator);
 
         mPager.setAdapter(new SliderAdapter(CarList.this, ImagesArray));
         indicator.setViewPager(mPager);
         final float density = getResources().getDisplayMetrics().density;
-        indicator.setRadius(5 * density);
+        indicator.setRadius(5 * density);*/
 
         NUM_PAGES = IMAGES.length;
     }

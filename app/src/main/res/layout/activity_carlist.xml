@@ -23,7 +23,7 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentTop="true" />
 
-            <com.viewpagerindicator.CirclePageIndicator
+            <!--<com.viewpagerindicator.CirclePageIndicator
                 android:id="@+id/indicator"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
                 app:centered="true"
                 app:fillColor="#EEEEEE"
                 app:pageColor="@color/colorPrimary"
-                app:snap="false" />
+                app:snap="false" />-->
 
             <Button
                 android:id="@+id/back"
