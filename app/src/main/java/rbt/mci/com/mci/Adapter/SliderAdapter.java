@@ -40,12 +40,25 @@ public class SliderAdapter extends PagerAdapter {
 
         assert imageLayout != null;
         final ImageView imageView = (ImageView) imageLayout.findViewById(R.id.image);
-        imageView.setImageResource(IMAGES.get(position));
         imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        imageView.setAdjustViewBounds(false);
+        imageView.setImageResource(IMAGES.get(position));
         view.addView(imageLayout, 0);
 
         return imageLayout;
     }
+/*
+    @Override
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        super.setPrimaryItem(container, position, object);
+
+        View imageLayout = inflater.inflate(R.layout.slider_item, container, false);
+        assert imageLayout != null;
+        ImageView imageView = (ImageView) imageLayout.findViewById(R.id.image);
+        int width = imageView.getMeasuredWidth();
+        int height = imageView.getMeasuredHeight();
+        container.setLayoutParams(new RelativeLayout.LayoutParams(width, Math.max(height, 1)));
+    }*/
 
     @Override
     public boolean isViewFromObject(View view, Object object) {
