@@ -54,7 +54,6 @@ public class CarList extends Activity implements View.OnClickListener {
         if (carListFeed != null) {
             ListAdapter carList_ad = new ListAdapter(carListFeed);
             recView.setAdapter(carList_ad);
-            //dddddd
         }
     }
 
