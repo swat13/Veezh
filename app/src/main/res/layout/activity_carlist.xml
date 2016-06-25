@@ -14,7 +14,7 @@
             android:id="@+id/slider"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.4"
+            android:layout_weight="0.38"
             android:gravity="center">
 
             <android.support.v4.view.ViewPager
@@ -102,7 +102,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.60"
+            android:layout_weight="0.62"
             android:paddingLeft="25dp"
             android:paddingRight="25dp"
             android:orientation="vertical">
@@ -113,4 +113,22 @@
                 android:layout_height="match_parent" />
         </LinearLayout>
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:clickable="true"
+        android:visibility="invisible">
+
+        <ProgressBar
+            android:id="@+id/simpleProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp" />
+
+    </RelativeLayout>
 </LinearLayout>

@@ -200,4 +200,80 @@ public class DOMParser {
 
         return null;
     }
+
+    public RSSFeed getCarDetail(String id) {
+
+        HttpURLConnection httpConn = null;
+        try {
+            RSSFeed _feed = new RSSFeed();
+            URL url = new URL(mainUrl + "viewad.php?id=" + id);
+            httpConn = (HttpURLConnection) url.openConnection();
+            httpConn.setAllowUserInteraction(false);
+            httpConn.setInstanceFollowRedirects(true);
+            httpConn.setRequestMethod("GET");
+            httpConn.setConnectTimeout(10000);
+            httpConn.setReadTimeout(10000);
+            httpConn.connect();
+            int resCode = httpConn.getResponseCode();
+
+            if (resCode != HttpURLConnection.HTTP_OK) {
+                return null;
+            }
+            InputStream in = httpConn.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            StringBuilder sb = new StringBuilder();
+
+            String line = null;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            JSONObject jsonObject = new JSONObject(sb.toString());
+            JSONArray jsonArray = jsonObject.getJSONArray("posts");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                RSSItem _items = new RSSItem();
+                JSONObject jsonObject0 = jsonArray.getJSONObject(i);
+                _items.setName(jsonObject0.getString("Berand") + " " + jsonObject0.getString("Model"));
+                _items.setCity(jsonObject0.getString("Ostan"));
+                _items.setPrice(jsonObject0.getString("Price"));
+                _items.setManufactured(jsonObject0.getString("Tsakht"));
+                _items.setBody(jsonObject0.getString("Body"));
+                _items.setBodyColor(jsonObject0.getString("BodyColor"));
+                _items.setFuel(jsonObject0.getString("Fuel"));
+                _items.setGearbox(jsonObject0.getString("Gearbox"));
+                _items.setInColor(jsonObject0.getString("InColor"));
+                _items.setBodyInColor(jsonObject0.getString("BodyInColor"));
+                _items.setPlate(jsonObject0.getString("Khas"));
+                _items.setStatus(jsonObject0.getString("Status"));
+                _items.setInsurance(jsonObject0.getString("Bime"));
+                _items.setUsed(jsonObject0.getString("Karkard"));
+                _items.setDesc(jsonObject0.getString("Tozih"));
+                _items.setPhone(jsonObject0.getString("Phone"));
+                _items.setId(jsonObject0.getString("Id"));
+                _items.setThumb(jsonObject0.getString("Thumb"));
+                _feed.addItem(_items);
+            }
+
+            return _feed;
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        } finally {
+            if (httpConn != null) {
+                httpConn.disconnect();
+            }
+        }
+
+        return null;
+    }
 }

@@ -139,14 +139,13 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
                         startActivityForResult(new Intent(Search.this, CarList.class).putExtra("CarList", result), 1);
                     }
                 }
-            } else if (error)
+            } else if (error) {
                 Toast.makeText(Search.this, "لطفا ابتدا برند را انتخاب نمایید!", Toast.LENGTH_SHORT).show();
-            else if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+            } else if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
                 Toast.makeText(Search.this, "خطا در برقراری ارتباط", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(Search.this, "محصولی موجود نیست", Toast.LENGTH_SHORT).show();
             }
-
         }
     }
 }
