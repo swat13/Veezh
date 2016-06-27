@@ -96,40 +96,4 @@ public class ModelSelectionList extends Activity {
 			return new FeedViewHolder(itemView);
 		}
 	}
-
-	/*public class RtlGridLayoutManager extends GridLayoutManager {
-
-		private int mParentWidth;
-		private int mItemWidth;
-
-		public RtlGridLayoutManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes, int parentWidth, int itemWidth) {
-			super(context, attrs, defStyleAttr, defStyleRes);
-			mParentWidth = parentWidth;
-			mItemWidth = itemWidth;
-		}
-
-		public RtlGridLayoutManager(Context context, int spanCount) {
-			super(context, spanCount);
-		}
-
-		public RtlGridLayoutManager(Context context, int spanCount, int orientation, boolean reverseLayout) {
-			super(context, spanCount, orientation, reverseLayout);
-		}
-
-		@Override
-		public int getPaddingLeft() {
-			return Math.round(mParentWidth / 2f - mItemWidth / 2f);
-		}
-
-		@Override
-		public int getPaddingRight() {
-			return getPaddingLeft();
-		}
-
-		@Override
-		protected boolean isLayoutRTL(){
-			return true;
-		}
-	}*/
-
 }

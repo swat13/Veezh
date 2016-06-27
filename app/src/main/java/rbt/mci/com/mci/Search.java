@@ -1,6 +1,8 @@
 package rbt.mci.com.mci;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,11 +21,11 @@ import rbt.mci.com.mci.Parser.RSSItem;
 public class Search extends AppCompatActivity implements View.OnClickListener {
 
     RelativeLayout progress;
-    TextView brandName_tx, modelName_tx;
-    Button btnSearch;
+    TextView brandName_tx, modelName_tx, sefr, karkarde;
     NetworkInfo activeNetworkInfo;
     String brandId = "";
     String modelId = "";
+    String statusId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,24 +34,28 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
         progress = (RelativeLayout) findViewById(R.id.progress_layout);
         modelName_tx = (TextView) findViewById(R.id.modelName);
         brandName_tx = (TextView) findViewById(R.id.brandName);
-        btnSearch = (Button) findViewById(R.id.btnSearch);
+        sefr = (TextView) findViewById(R.id.sefr);
+        karkarde = (TextView) findViewById(R.id.karkarde);
 
-        activeNetworkInfo = Application.connectivityManager.getActiveNetworkInfo();
-
-        btnSearch.setOnClickListener(new View.OnClickListener() {
+        sefr.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (modelId.equals("") || brandId.equals("")) {
-                    if (brandId.equals("")) {
-                        Toast.makeText(Search.this, "لطفا ابتدا برند را انتخاب نمایید!", Toast.LENGTH_SHORT).show();
-                    } else if (modelId.equals("")) {
-                        Toast.makeText(Search.this, "لطفا ابتدا مدل را انتخاب نمایید!", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    new AsyncShowList().execute("S");
-                }
+                sefr.setTypeface(Application.myFont, Typeface.BOLD);
+                karkarde.setTypeface(Application.myFont, Typeface.NORMAL);
+                statusId = "1";
             }
         });
+
+        karkarde.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                karkarde.setTypeface(Application.myFont, Typeface.BOLD);
+                sefr.setTypeface(Application.myFont, Typeface.NORMAL);
+                statusId = "2";
+            }
+        });
+
+        activeNetworkInfo = Application.connectivityManager.getActiveNetworkInfo();
     }
 
     @Override
@@ -58,22 +64,19 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
             case R.id.back:
                 finish();
                 break;
-
             case R.id.brand:
                 new AsyncShowList().execute("B");
                 break;
-
             case R.id.model:
                 new AsyncShowList().execute("M");
                 break;
-
             case R.id.location:
                 break;
-
             case R.id.other:
+                new AsyncShowList().execute("Y");
                 break;
-
             case R.id.btnSearch:
+                new AsyncShowList().execute("S");
                 break;
         }
     }
@@ -102,6 +105,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
     private class AsyncShowList extends AsyncTask<String, Void, RSSFeed> {
 
         boolean error = false;
+        boolean error2 = false;
         String type = "";
 
         @Override
@@ -114,14 +118,20 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
         protected RSSFeed doInBackground(String... params) {
             DOMParser myParser = new DOMParser();
             type = params[0];
-            if (params[0].equals("B")) {
-                return myParser.getAllBrands();
-            } else if (params[0].equals("M") && brandId != null) {
-                return myParser.getAllModels(brandId);
-            } else if (params[0].equals("S")) {
-                return myParser.getCarList(brandId, modelId, "500000000", "550000000", "130", "133", "8");
-            } else {
+            if (params[0].equals("M") && brandId.equals("")) {
                 error = true;
+            } else if (params[0].equals("Y") && modelId.equals("")) {
+                error2 = true;
+            }
+            switch (params[0]) {
+                case "B":
+                    return myParser.getAllBrands();
+                case "M":
+                    return myParser.getAllModels(brandId);
+                case "S":
+                    return myParser.getCarList(brandId, modelId, "", "", "", "", "", "", "", "", statusId);
+                case "Y":
+                    return myParser.getProductionYear(modelId);
             }
             return null;
         }
@@ -131,20 +141,29 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
             progress.setVisibility(View.INVISIBLE);
             if (result != null) {
                 if (result.getItemCount() > 0) {
-                    if (type.equals("B")) {
-                        startActivityForResult(new Intent(Search.this, BrandSelectionList.class).putExtra("BrandList", result), 1);
-                    } else if (type.equals("M")) {
-                        startActivityForResult(new Intent(Search.this, ModelSelectionList.class).putExtra("ModelList", result), 1);
-                    } else if (type.equals("S")) {
-                        startActivityForResult(new Intent(Search.this, CarList.class).putExtra("CarList", result), 1);
+                    switch (type) {
+                        case "B":
+                            startActivityForResult(new Intent(Search.this, BrandSelectionList.class).putExtra("BrandList", result), 1);
+                            break;
+                        case "M":
+                            startActivityForResult(new Intent(Search.this, ModelSelectionList.class).putExtra("ModelList", result), 1);
+                            break;
+                        case "S":
+                            startActivityForResult(new Intent(Search.this, CarList.class).putExtra("CarList", result), 1);
+                            break;
+                        case "Y":
+                            startActivityForResult(new Intent(Search.this, OtherSettingsActivity.class).putExtra("YearList", result).putExtra("brandId", brandId).putExtra("modelId", modelId).putExtra("statusId", statusId), 1);
+                            break;
                     }
                 }
             } else if (error) {
                 Toast.makeText(Search.this, "لطفا ابتدا برند را انتخاب نمایید!", Toast.LENGTH_SHORT).show();
+            } else if (error2) {
+                Toast.makeText(Search.this, "لطفا ابتدا مدل را انتخاب نمایید!", Toast.LENGTH_SHORT).show();
             } else if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
-                Toast.makeText(Search.this, "خطا در برقراری ارتباط", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Search.this, "خطا در برقراری ارتباط!", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(Search.this, "محصولی موجود نیست", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Search.this, "خودرویی با این مشخصات موجود نیست!", Toast.LENGTH_SHORT).show();
             }
         }
     }

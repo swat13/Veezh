@@ -24,7 +24,7 @@ public final class Application extends android.app.Application {
         assets = getAssets();
         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        myFont = Typeface.createFromAsset(assets, "IRANSansMobile_Bold.ttf");
+        myFont = Typeface.createFromAsset(assets, "IRANSansMobile(FaNum).ttf");
         FontsOverride.setDefaultFont(context, "MONOSPACE", "IRANSansMobile(FaNum).ttf");
         mInstance = this;
     }
