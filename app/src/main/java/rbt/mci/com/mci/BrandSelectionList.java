@@ -30,7 +30,7 @@ public class BrandSelectionList extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.brand_selection_list);
 
-		RSSFeed likeListFeed = (RSSFeed) getIntent().getSerializableExtra("BrandList");
+		RSSFeed brandListFeed = (RSSFeed) getIntent().getSerializableExtra("BrandList");
 
 		recView = (RecyclerView) findViewById(R.id.brand_list);
 		GridLayoutManager glm = new GridLayoutManager(BrandSelectionList.this, 2);
@@ -38,24 +38,11 @@ public class BrandSelectionList extends Activity {
 		recView.setHasFixedSize(true);
 		recView.setItemAnimator(new DefaultItemAnimator());
 
-		if (likeListFeed != null) {
-			ListAdapter likeList_ad = new ListAdapter(likeListFeed);
-			recView.setAdapter(likeList_ad);
+		if (brandListFeed != null) {
+			ListAdapter brandList_ad = new ListAdapter(brandListFeed);
+			recView.setAdapter(brandList_ad);
 		}
 	}
-
-	/*@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK) {
-			Intent i = new Intent();
-			i.putExtra("brand", brandItem);
-			i.putExtra("model", data.getSerializableExtra("model"));
-			setResult(RESULT_OK, i);
-			finish();
-		}
-
-	}*/
 
 	public class FeedViewHolder extends RecyclerView.ViewHolder {
 		protected LinearLayout main_layout;
@@ -93,8 +80,6 @@ public class BrandSelectionList extends Activity {
 					i.putExtra("brand", _feed.getItem(position));
 					setResult(RESULT_OK, i);
 					finish();
-					/*brandItem = _feed.getItem(position);
-					new AsyncShowList().execute(brandItem.getId());*/
 				}
 			});
 
@@ -116,67 +101,4 @@ public class BrandSelectionList extends Activity {
 		}
 
 	}
-
-	/*private class AsyncShowList extends AsyncTask<String, Void, RSSFeed> {
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			progress.setVisibility(View.VISIBLE);
-		}
-
-		@Override
-		protected RSSFeed doInBackground(String... params) {
-			DOMParser myParser = new DOMParser();
-			return myParser.getAllModels(params[0]);
-		}
-
-		@Override
-		protected void onPostExecute(RSSFeed result) {
-			progress.setVisibility(View.INVISIBLE);
-			if (result != null) {
-				if (result.getItemCount() > 0) {
-					startActivityForResult(new Intent(BrandSelectionList.this, ModelSelectionList.class).putExtra("ModelList", result),1);
-				}
-			} else {
-				Toast.makeText(BrandSelectionList.this, "Error In Connection", Toast.LENGTH_SHORT).show();
-			}
-		}
-	}*/
-
-	/*public class RtlGridLayoutManager extends GridLayoutManager {
-
-		private int mParentWidth;
-		private int mItemWidth;
-
-		public RtlGridLayoutManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes, int parentWidth, int itemWidth) {
-			super(context, attrs, defStyleAttr, defStyleRes);
-			mParentWidth = parentWidth;
-			mItemWidth = itemWidth;
-		}
-
-		public RtlGridLayoutManager(Context context, int spanCount) {
-			super(context, spanCount);
-		}
-
-		public RtlGridLayoutManager(Context context, int spanCount, int orientation, boolean reverseLayout) {
-			super(context, spanCount, orientation, reverseLayout);
-		}
-
-		@Override
-		public int getPaddingLeft() {
-			return Math.round(mParentWidth / 2f - mItemWidth / 2f);
-		}
-
-		@Override
-		public int getPaddingRight() {
-			return getPaddingLeft();
-		}
-
-		@Override
-		protected boolean isLayoutRTL(){
-			return true;
-		}
-	}
-*/
 }

@@ -35,7 +35,7 @@ import rbt.mci.com.mci.Adapter.SliderAdapter;
 import rbt.mci.com.mci.Parser.DOMParser;
 import rbt.mci.com.mci.Parser.RSSFeed;
 
-public class CarList extends Activity implements View.OnClickListener {
+public class SpecialOfferActivity extends Activity implements View.OnClickListener {
 
     private RecyclerView recView;
     RelativeLayout progress;
@@ -49,22 +49,21 @@ public class CarList extends Activity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_carlist);
+        setContentView(R.layout.special_offer_activity);
 
+        final RSSFeed vipListFeed = (RSSFeed) getIntent().getSerializableExtra("VipList");
         activeNetworkInfo = Application.connectivityManager.getActiveNetworkInfo();
-
-        final RSSFeed carListFeed = (RSSFeed) getIntent().getSerializableExtra("CarList");
 
         init();
 
         recView = (RecyclerView) findViewById(R.id.car_list);
         progress = (RelativeLayout) findViewById(R.id.progress_layout);
-        recView.setLayoutManager(new LinearLayoutManager(CarList.this));
+        recView.setLayoutManager(new LinearLayoutManager(SpecialOfferActivity.this));
         recView.setItemAnimator(new DefaultItemAnimator());
 
-        if (carListFeed != null) {
-            ListAdapter carList_ad = new ListAdapter(carListFeed);
-            recView.setAdapter(carList_ad);
+        if (vipListFeed != null) {
+            ListAdapter vipList_ad = new ListAdapter(vipListFeed);
+            recView.setAdapter(vipList_ad);
         }
     }
 
@@ -120,7 +119,7 @@ public class CarList extends Activity implements View.OnClickListener {
                     .placeholder(R.drawable.benz_arm)
                     .error(R.drawable.benz_arm)
                     .into(holder.thumb);
-            /*ImageLoaderConfiguration defaultConfiguration = new ImageLoaderConfiguration.Builder(CarList.this)
+            /*ImageLoaderConfiguration defaultConfiguration = new ImageLoaderConfiguration.Builder(SpecialOfferActivity.this)
                     .threadPriority(Thread.NORM_PRIORITY - 2)
                     .denyCacheImageMultipleSizesInMemory()
                     .diskCacheFileNameGenerator(new Md5FileNameGenerator())
@@ -181,7 +180,7 @@ public class CarList extends Activity implements View.OnClickListener {
             }
         });
 
-        mPager.setAdapter(new SliderAdapter(CarList.this, ImagesArray));
+        mPager.setAdapter(new SliderAdapter(SpecialOfferActivity.this, ImagesArray));
         NUM_PAGES = IMAGES.length;
     }
 
@@ -216,13 +215,13 @@ public class CarList extends Activity implements View.OnClickListener {
             if (result1 != null) {
                 if (result1.getItemCount() > 0) {
                     if (type.equals("D")) {
-                        startActivity(new Intent(CarList.this, SelectedCarActivity.class).putExtra("carDetail", result1).putExtra("carImage", result2));
+                        startActivity(new Intent(SpecialOfferActivity.this, SelectedCarActivity.class).putExtra("carDetail", result1).putExtra("carImage", result2));
                     }
                 }
             } else if (error) {
-                Toast.makeText(CarList.this, "لطفا ابتدا برند را انتخاب نمایید!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SpecialOfferActivity.this, "لطفا ابتدا برند را انتخاب نمایید!", Toast.LENGTH_SHORT).show();
             } else if (activeNetworkInfo == null) {
-                Toast.makeText(CarList.this, "خطا در برقراری ارتباط", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SpecialOfferActivity.this, "خطا در برقراری ارتباط", Toast.LENGTH_SHORT).show();
             }
         }
     }

@@ -2,27 +2,29 @@ package rbt.mci.com.mci;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
-import rbt.mci.com.mci.Adapter.SliderAdapter;
+import java.util.HashMap;
+
 import rbt.mci.com.mci.Parser.RSSFeed;
 
-public class SelectedCarActivity extends Activity implements View.OnClickListener {
-
+public class SelectedCarActivity extends Activity implements View.OnClickListener, ViewPagerEx.OnPageChangeListener {
     TextView price, manuYear, name, used, description, sukht, rang_shodegi, rang_dakheli, rang_badane, masraf, jabe_dande, bime, pelak, phone;
-    private static final Integer[] IMAGES = {R.drawable.banner1, R.drawable.banner2, R.drawable.banner3};
-    private static int currentPage = 0;
-    private static int NUM_PAGES = 0;
-    private ArrayList<Integer> ImagesArray = new ArrayList<>();
     RSSFeed carDetailFeed;
+    RSSFeed carImageFeed;
+    NetworkInfo activeNetworkInfo;
+    SliderLayout mPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,8 @@ public class SelectedCarActivity extends Activity implements View.OnClickListene
         setContentView(R.layout.selected_car_activity);
 
         carDetailFeed = (RSSFeed) getIntent().getSerializableExtra("carDetail");
+        carImageFeed = (RSSFeed) getIntent().getSerializableExtra("carImage");
+        activeNetworkInfo = Application.connectivityManager.getActiveNetworkInfo();
 
         price = (TextView) findViewById(R.id.price);
         manuYear = (TextView) findViewById(R.id.manuYear);
@@ -46,8 +50,6 @@ public class SelectedCarActivity extends Activity implements View.OnClickListene
         pelak = (TextView) findViewById(R.id.pelak);
         phone = (TextView) findViewById(R.id.phone);
 
-        init();
-
         price.setText(carDetailFeed.getItem(0).getPrice());
         manuYear.setText(carDetailFeed.getItem(0).getManufactured());
         name.setText(carDetailFeed.getItem(0).getName());
@@ -62,6 +64,32 @@ public class SelectedCarActivity extends Activity implements View.OnClickListene
         pelak.setText(carDetailFeed.getItem(0).getPlate());
         phone.setText(carDetailFeed.getItem(0).getPhone());
         masraf.setText("-");
+
+        mPager = (SliderLayout) findViewById(R.id.slidePager);
+        HashMap<String, String> url_maps = new HashMap<>();
+        for (int i = 0; i < carImageFeed.getItemCount(); i++) {
+            url_maps.put("" + i, "http://www.veezh.com/upload/" + carImageFeed.getItem(i).getImage() + ".jpg");
+            Log.e("image", carImageFeed.getItem(i).getImage());
+        }
+
+        for (String name : url_maps.keySet()) {
+            TextSliderView textSliderView = new TextSliderView(this);
+            textSliderView
+                    .image(url_maps.get(name))
+                    .setScaleType(BaseSliderView.ScaleType.Fit);
+
+            mPager.addSlider(textSliderView);
+        }
+        mPager.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
+        mPager.setCustomAnimation(new DescriptionAnimation());
+        mPager.setDuration(5000);
+        mPager.addOnPageChangeListener(this);
+    }
+
+    @Override
+    protected void onStop() {
+        mPager.stopAutoCycle();
+        super.onStop();
     }
 
     @Override
@@ -89,42 +117,18 @@ public class SelectedCarActivity extends Activity implements View.OnClickListene
         }
     }
 
-    private void init() {
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        for (int i = 0; i < IMAGES.length; i++)
-            ImagesArray.add(IMAGES[i]);
+    }
 
-        ViewPager mPager = (ViewPager) findViewById(R.id.slidePager);
+    @Override
+    public void onPageSelected(int position) {
 
-        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    }
 
-            }
+    @Override
+    public void onPageScrollStateChanged(int state) {
 
-            @Override
-            public void onPageSelected(int position) {
-                switch (position){
-                    case 0:
-                        ((RadioButton)findViewById(R.id.radioButton)).setChecked(true);
-                        break;
-                    case 1:
-                        ((RadioButton)findViewById(R.id.radioButton2)).setChecked(true);
-                        break;
-                    case 2:
-                        ((RadioButton)findViewById(R.id.radioButton3)).setChecked(true);
-                        break;
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
-        mPager.setAdapter(new SliderAdapter(SelectedCarActivity.this, ImagesArray));
-
-        NUM_PAGES = IMAGES.length;
     }
 }

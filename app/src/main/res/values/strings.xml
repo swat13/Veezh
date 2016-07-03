@@ -1,6 +1,5 @@
 <resources>
-    <string name="app_name">Veezh</string>
+    <string name="app_name">ویژ</string>
     <string name="action_settings">Settings</string>
-    <string name="demo_min_label"></string>
-    <string name="demo_max_label"></string>
+    <string name="google_api_key">AIzaSyAUghN8WIdrrGbDD-4USlZb2CZnyH2So8E</string>
 </resources>

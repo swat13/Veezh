@@ -1,6 +1,7 @@
 package rbt.mci.com.mci.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
@@ -47,18 +48,6 @@ public class SliderAdapter extends PagerAdapter {
 
         return imageLayout;
     }
-/*
-    @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        super.setPrimaryItem(container, position, object);
-
-        View imageLayout = inflater.inflate(R.layout.slider_item, container, false);
-        assert imageLayout != null;
-        ImageView imageView = (ImageView) imageLayout.findViewById(R.id.image);
-        int width = imageView.getMeasuredWidth();
-        int height = imageView.getMeasuredHeight();
-        container.setLayoutParams(new RelativeLayout.LayoutParams(width, Math.max(height, 1)));
-    }*/
 
     @Override
     public boolean isViewFromObject(View view, Object object) {

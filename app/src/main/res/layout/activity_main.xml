@@ -18,7 +18,8 @@
             android:layout_centerInParent="true"
             android:text="ویژ"
             android:textColor="#FFFFFF"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <LinearLayout
@@ -185,5 +186,22 @@
             android:layout_toRightOf="@+id/gear"
             android:background="@drawable/profile"
             android:gravity="end" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:clickable="true"
+        android:visibility="invisible">
+
+        <ProgressBar
+            android:id="@+id/simpleProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginBottom="10dp" />
     </RelativeLayout>
 </RelativeLayout>

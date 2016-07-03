@@ -26,7 +26,7 @@ public class ModelSelectionList extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.model_selection_list);
 
-		RSSFeed likeListFeed = (RSSFeed) getIntent().getSerializableExtra("ModelList");
+		RSSFeed modelListFeed = (RSSFeed) getIntent().getSerializableExtra("ModelList");
 
 		recView = (RecyclerView) findViewById(R.id.model_list);
 		GridLayoutManager llm = new GridLayoutManager(ModelSelectionList.this, 2);
@@ -34,9 +34,9 @@ public class ModelSelectionList extends Activity {
 		recView.setHasFixedSize(true);
 		recView.setItemAnimator(new DefaultItemAnimator());
 
-		if (likeListFeed != null) {
-			ListAdapter likeList_ad = new ListAdapter(likeListFeed);
-			recView.setAdapter(likeList_ad);
+		if (modelListFeed != null) {
+			ListAdapter modelList_ad = new ListAdapter(modelListFeed);
+			recView.setAdapter(modelList_ad);
 		}
 	}
 

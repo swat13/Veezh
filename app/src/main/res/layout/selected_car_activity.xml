@@ -1,58 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <RelativeLayout
-        android:id="@+id/slider"
+        android:id="@+id/slider_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.38"
         android:gravity="center">
 
-        <android.support.v4.view.ViewPager
+        <com.daimajia.slider.library.SliderLayout
             android:id="@+id/slidePager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:padding="-5dp"
-            android:layout_marginTop="-10dp"
-            android:layout_alignParentTop="true" />
+            android:layout_marginTop="-10dp"/>
 
-        <RadioGroup
-            android:id="@+id/radiogroup"
+        <com.daimajia.slider.library.Indicators.PagerIndicator
+            android:id="@+id/custom_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            android:layout_margin="10dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:clickable="false"
-                android:scaleX="0.6"
-                android:scaleY="0.6" />
-
-            <RadioButton
-                android:id="@+id/radioButton2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:scaleX="0.6"
-                android:scaleY="0.6" />
-
-            <RadioButton
-                android:id="@+id/radioButton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:scaleX="0.6"
-                android:scaleY="0.6" />
-        </RadioGroup>
+            android:gravity="center"
+            custom:selected_color="#555555"
+            custom:selected_height="8dp"
+            custom:selected_padding_left="3dp"
+            custom:selected_padding_right="3dp"
+            custom:selected_width="8dp"
+            custom:shape="oval"
+            custom:unselected_color="#55555555"
+            custom:unselected_height="4dp"
+            custom:unselected_padding_left="3dp"
+            custom:unselected_padding_right="3dp"
+            custom:unselected_width="4dp" />
 
         <ImageView
             android:layout_width="40dp"

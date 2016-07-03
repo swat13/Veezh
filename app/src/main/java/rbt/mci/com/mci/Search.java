@@ -21,11 +21,12 @@ import rbt.mci.com.mci.Parser.RSSItem;
 public class Search extends AppCompatActivity implements View.OnClickListener {
 
     RelativeLayout progress;
-    TextView brandName_tx, modelName_tx, sefr, karkarde;
+    TextView brandName_tx, modelName_tx, sefr, karkarde, cityName_tx;
     NetworkInfo activeNetworkInfo;
     String brandId = "";
     String modelId = "";
     String statusId = "";
+    String cityId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
         progress = (RelativeLayout) findViewById(R.id.progress_layout);
         modelName_tx = (TextView) findViewById(R.id.modelName);
         brandName_tx = (TextView) findViewById(R.id.brandName);
+        cityName_tx = (TextView) findViewById(R.id.cityName);
         sefr = (TextView) findViewById(R.id.sefr);
         karkarde = (TextView) findViewById(R.id.karkarde);
 
@@ -71,6 +73,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
                 new AsyncShowList().execute("M");
                 break;
             case R.id.location:
+                startActivityForResult(new Intent(Search.this, LocationActivity.class), 1);
                 break;
             case R.id.other:
                 new AsyncShowList().execute("Y");
@@ -93,11 +96,15 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
             if (data.hasExtra("brand")) {
                 if (!modelId.equals("")) {
                     modelId = "";
-                    modelName_tx.setText("RS7");
+                    modelName_tx.setText("همه");
                 }
                 brandId = ((RSSItem) data.getSerializableExtra("brand")).getId();
                 brandName_tx.setText(((RSSItem) data.getSerializableExtra("brand")).getName());
                 Log.e("brandID", brandId);
+            }
+            if (data.hasExtra("cityId") && data.hasExtra("cityName")) {
+                cityId = data.getStringExtra("cityId");
+                cityName_tx.setText(data.getStringExtra("cityName"));
             }
         }
     }
@@ -129,7 +136,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
                 case "M":
                     return myParser.getAllModels(brandId);
                 case "S":
-                    return myParser.getCarList(brandId, modelId, "", "", "", "", "", "", "", "", statusId);
+                    return myParser.getCarList(brandId, modelId, "", "", "", "", cityId, "", "", "", statusId);
                 case "Y":
                     return myParser.getProductionYear(modelId);
             }
@@ -152,7 +159,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
                             startActivityForResult(new Intent(Search.this, CarList.class).putExtra("CarList", result), 1);
                             break;
                         case "Y":
-                            startActivityForResult(new Intent(Search.this, OtherSettingsActivity.class).putExtra("YearList", result).putExtra("brandId", brandId).putExtra("modelId", modelId).putExtra("statusId", statusId), 1);
+                            startActivityForResult(new Intent(Search.this, OtherSettingsActivity.class).putExtra("YearList", result).putExtra("brandId", brandId).putExtra("modelId", modelId).putExtra("statusId", statusId).putExtra("cityId", cityId), 1);
                             break;
                     }
                 }
@@ -160,7 +167,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
                 Toast.makeText(Search.this, "لطفا ابتدا برند را انتخاب نمایید!", Toast.LENGTH_SHORT).show();
             } else if (error2) {
                 Toast.makeText(Search.this, "لطفا ابتدا مدل را انتخاب نمایید!", Toast.LENGTH_SHORT).show();
-            } else if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+            } else if (activeNetworkInfo == null) {
                 Toast.makeText(Search.this, "خطا در برقراری ارتباط!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(Search.this, "خودرویی با این مشخصات موجود نیست!", Toast.LENGTH_SHORT).show();

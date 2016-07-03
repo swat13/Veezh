@@ -23,8 +23,11 @@
                 android:orientation="vertical">
 
                 <ImageView
-                    android:layout_width="180dp"
-                    android:layout_height="150dp"
+                    android:id="@+id/thumb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:scaleType="fitXY"
                     android:src="@drawable/benz_arm" />
             </LinearLayout>
 
@@ -157,8 +160,8 @@
     <View
         android:layout_width="285dp"
         android:layout_height="0.5dp"
-        android:alpha="0.67"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
+        android:alpha="0.67"
         android:background="#000000" />
 </LinearLayout>
