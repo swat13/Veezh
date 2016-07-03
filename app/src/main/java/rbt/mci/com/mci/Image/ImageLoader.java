@@ -48,6 +48,7 @@ public class ImageLoader {
     }
 
     int stub_id = R.drawable.benz_arm;
+    //gvv
 
     public void DisplayImage(String url, ImageView imageView,int isRounded,boolean class_) {
         imageViews.put(imageView, url);
