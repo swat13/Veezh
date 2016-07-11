@@ -23,12 +23,16 @@ public class RSSItem implements Serializable {
     private String _insurance = null;
     private String _desc = null;
     private String _phone = null;
+    private String _title = null;
+    private String _province = null;
+    private String _category = null;
+    private String _region = null;
 
-    void setName(String name) {
+    public void setName(String name) {
         _name = name;
     }
 
-    void setId(String id) {
+    public void setId(String id) {
         _id = id;
     }
 
@@ -174,5 +178,37 @@ public class RSSItem implements Serializable {
 
     public void setPhone(String phone) {
         _phone = phone;
+    }
+
+    public String getCategory() {
+        return _category;
+    }
+
+    public void setCategory(String category) {
+        _category = category;
+    }
+
+    public String getProvince() {
+        return _province;
+    }
+
+    public void setProvince(String province) {
+        _province = province;
+    }
+
+    public String getRegion() {
+        return _region;
+    }
+
+    public void setRegion(String region) {
+        _region = region;
+    }
+
+    public String getTitle() {
+        return _title;
+    }
+
+    public void setTitle(String title) {
+        _title = title;
     }
 }

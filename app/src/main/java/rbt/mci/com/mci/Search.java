@@ -32,6 +32,7 @@ public class Search extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
         progress = (RelativeLayout) findViewById(R.id.progress_layout);
         modelName_tx = (TextView) findViewById(R.id.modelName);
         brandName_tx = (TextView) findViewById(R.id.brandName);
