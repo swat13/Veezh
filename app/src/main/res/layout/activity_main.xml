@@ -42,6 +42,7 @@
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:background="@drawable/main_vip_pic"
+                android:onClick="onClick"
                 android:scaleType="fitCenter" />
 
             <TextView
@@ -68,6 +69,7 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:background="@drawable/main_search_pic"
+                android:onClick="onClick"
                 android:scaleType="fitCenter" />
 
             <TextView
@@ -96,10 +98,12 @@
                 android:layout_weight="0.4">
 
                 <ImageView
+                    android:id="@+id/lavazem_yadaki"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
                     android:background="@drawable/main_accessory_pic"
+                    android:onClick="onClick"
                     android:scaleType="fitCenter" />
 
                 <TextView
@@ -120,11 +124,12 @@
                 android:layout_weight="0.6">
 
                 <ImageView
-                    android:id="@+id/tape"
+                    android:id="@+id/marakez_khadamati"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:adjustViewBounds="true"
                     android:background="@drawable/main_service_pic"
+                    android:onClick="onClick"
                     android:scaleType="fitCenter" />
 
                 <TextView

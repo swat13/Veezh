@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,11 +17,10 @@ import rbt.mci.com.mci.Parser.DOMParser;
 import rbt.mci.com.mci.Parser.RSSFeed;
 
 
-public class MainPage extends AppCompatActivity {
+public class MainPage extends AppCompatActivity implements View.OnClickListener {
 
     TextView title;
     RelativeLayout progress;
-    ImageView search, vip_recommend;
     NetworkInfo activeNetworkInfo;
 
     @Override
@@ -31,8 +29,6 @@ public class MainPage extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         title = (TextView) findViewById(R.id.pageTitle);
-        search = (ImageView) findViewById(R.id.search);
-        vip_recommend = (ImageView) findViewById(R.id.vip_recommend);
         progress = (RelativeLayout) findViewById(R.id.progress_layout);
         activeNetworkInfo = Application.connectivityManager.getActiveNetworkInfo();
 
@@ -40,19 +36,6 @@ public class MainPage extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 23) {
             checkPermissions();
         }
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainPage.this, Search.class));
-            }
-        });
-
-        vip_recommend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new AsyncShowList().execute("V");
-            }
-        });
     }
 
     private void checkPermissions() {
@@ -61,6 +44,24 @@ public class MainPage extends AppCompatActivity {
                         Manifest.permission.ACCESS_COARSE_LOCATION,
                         Manifest.permission.ACCESS_FINE_LOCATION},
                 0);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.search:
+                startActivity(new Intent(MainPage.this, Search.class));
+                break;
+            case R.id.vip_recommend:
+                new AsyncShowList().execute("V");
+                break;
+            case R.id.lavazem_yadaki:
+                startActivity(new Intent(MainPage.this, Accessory.class));
+                break;
+            case R.id.marakez_khadamati:
+                startActivity(new Intent(MainPage.this, Service.class));
+                break;
+        }
     }
 
     private class AsyncShowList extends AsyncTask<String, Void, RSSFeed> {

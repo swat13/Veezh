@@ -447,6 +447,136 @@ public class DOMParser {
         return null;
     }
 
+    public RSSFeed getAccessoriesCenter(String title, String province, String city, String region, String cats) {
+
+        HttpURLConnection httpConn = null;
+        try {
+            RSSFeed _feed = new RSSFeed();
+            URL url = new URL(mainUrl + "accessories.php?onvan=" + title + "&ostan=" + province + "&shahr=" + city + "&mantaghe=" + region + "&cats=" + cats);
+            httpConn = (HttpURLConnection) url.openConnection();
+            httpConn.setAllowUserInteraction(false);
+            httpConn.setInstanceFollowRedirects(true);
+            httpConn.setRequestMethod("POST");
+            httpConn.setConnectTimeout(10000);
+            httpConn.setReadTimeout(10000);
+            httpConn.connect();
+            int resCode = httpConn.getResponseCode();
+
+            if (resCode != HttpURLConnection.HTTP_OK) {
+                return null;
+            }
+            InputStream in = httpConn.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            StringBuilder sb = new StringBuilder();
+
+            String line = null;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            JSONObject jsonObject = new JSONObject(sb.toString());
+            JSONArray jsonArray = jsonObject.getJSONArray("posts");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                RSSItem _items = new RSSItem();
+                JSONObject jsonObject0 = jsonArray.getJSONObject(i);
+                _items.setTitle(jsonObject0.getString("Onvan"));
+                _items.setProvince(jsonObject0.getString("Ostan"));
+                _items.setCity(jsonObject0.getString("Shahr"));
+                _items.setRegion(jsonObject0.getString("Mantaghe"));
+                _items.setCategory(jsonObject0.getString("Cats"));
+                _items.setId(jsonObject0.getString("Id"));
+                _items.setThumb(jsonObject0.getString("Thumb"));
+                _feed.addItem(_items);
+            }
+
+            return _feed;
+
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (httpConn != null) {
+                httpConn.disconnect();
+            }
+        }
+
+        return null;
+    }
+
+    public RSSFeed getServicesCenter(String title, String province, String city, String region, String cats) {
+
+        HttpURLConnection httpConn = null;
+        try {
+            RSSFeed _feed = new RSSFeed();
+            URL url = new URL(mainUrl + "services.php?onvan=" + title + "&ostan=" + province + "&shahr=" + city + "&mantaghe=" + region + "&cats=" + cats);
+            httpConn = (HttpURLConnection) url.openConnection();
+            httpConn.setAllowUserInteraction(false);
+            httpConn.setInstanceFollowRedirects(true);
+            httpConn.setRequestMethod("POST");
+            httpConn.setConnectTimeout(10000);
+            httpConn.setReadTimeout(10000);
+            httpConn.connect();
+            int resCode = httpConn.getResponseCode();
+
+            if (resCode != HttpURLConnection.HTTP_OK) {
+                return null;
+            }
+            InputStream in = httpConn.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            StringBuilder sb = new StringBuilder();
+
+            String line = null;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            JSONObject jsonObject = new JSONObject(sb.toString());
+            JSONArray jsonArray = jsonObject.getJSONArray("posts");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                RSSItem _items = new RSSItem();
+                JSONObject jsonObject0 = jsonArray.getJSONObject(i);
+                _items.setTitle(jsonObject0.getString("Onvan"));
+                _items.setProvince(jsonObject0.getString("Ostan"));
+                _items.setCity(jsonObject0.getString("Shahr"));
+                _items.setRegion(jsonObject0.getString("Mantaghe"));
+                _items.setCategory(jsonObject0.getString("Cats"));
+                _items.setId(jsonObject0.getString("Id"));
+                _items.setThumb(jsonObject0.getString("Thumb"));
+                _feed.addItem(_items);
+            }
+
+            return _feed;
+
+        } catch (JSONException | IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (httpConn != null) {
+                httpConn.disconnect();
+            }
+        }
+
+        return null;
+    }
+
     public RSSFeed getAllModels(String id) {
 
         HttpURLConnection httpConn = null;
@@ -684,6 +814,138 @@ public class DOMParser {
                 _items.setUsed(jsonObject0.getString("Karkard"));
                 _items.setDesc(jsonObject0.getString("Tozih"));
                 _items.setPhone(jsonObject0.getString("Phone"));
+                _items.setId(jsonObject0.getString("Id"));
+                _items.setThumb(jsonObject0.getString("Thumb"));
+                _feed.addItem(_items);
+            }
+
+            return _feed;
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        } finally {
+            if (httpConn != null) {
+                httpConn.disconnect();
+            }
+        }
+
+        return null;
+    }
+
+    public RSSFeed getAccessoryDetail(String id) {
+
+        HttpURLConnection httpConn = null;
+        try {
+            RSSFeed _feed = new RSSFeed();
+            URL url = new URL(mainUrl + "viewaccessories.php?id=" + id);
+            httpConn = (HttpURLConnection) url.openConnection();
+            httpConn.setAllowUserInteraction(false);
+            httpConn.setInstanceFollowRedirects(true);
+            httpConn.setRequestMethod("POST");
+            httpConn.setConnectTimeout(10000);
+            httpConn.setReadTimeout(10000);
+            httpConn.connect();
+            int resCode = httpConn.getResponseCode();
+
+            if (resCode != HttpURLConnection.HTTP_OK) {
+                return null;
+            }
+            InputStream in = httpConn.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            StringBuilder sb = new StringBuilder();
+
+            String line = null;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            JSONObject jsonObject = new JSONObject(sb.toString());
+            JSONArray jsonArray = jsonObject.getJSONArray("posts");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                RSSItem _items = new RSSItem();
+                JSONObject jsonObject0 = jsonArray.getJSONObject(i);
+                _items.setTitle(jsonObject0.getString("Onvan"));
+                _items.setProvince(jsonObject0.getString("Ostan"));
+                _items.setCity(jsonObject0.getString("Shahr"));
+                _items.setRegion(jsonObject0.getString("Mantaghe"));
+                _items.setCategory(jsonObject0.getString("Cats"));
+                _items.setDesc(jsonObject0.getString("Tozih"));
+                _items.setId(jsonObject0.getString("Id"));
+                _items.setThumb(jsonObject0.getString("Thumb"));
+                _feed.addItem(_items);
+            }
+
+            return _feed;
+
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        } finally {
+            if (httpConn != null) {
+                httpConn.disconnect();
+            }
+        }
+
+        return null;
+    }
+
+    public RSSFeed getServiceDetail(String id) {
+
+        HttpURLConnection httpConn = null;
+        try {
+            RSSFeed _feed = new RSSFeed();
+            URL url = new URL(mainUrl + "viewservice.php?id=" + id);
+            httpConn = (HttpURLConnection) url.openConnection();
+            httpConn.setAllowUserInteraction(false);
+            httpConn.setInstanceFollowRedirects(true);
+            httpConn.setRequestMethod("POST");
+            httpConn.setConnectTimeout(10000);
+            httpConn.setReadTimeout(10000);
+            httpConn.connect();
+            int resCode = httpConn.getResponseCode();
+
+            if (resCode != HttpURLConnection.HTTP_OK) {
+                return null;
+            }
+            InputStream in = httpConn.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+            StringBuilder sb = new StringBuilder();
+
+            String line = null;
+            try {
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            JSONObject jsonObject = new JSONObject(sb.toString());
+            JSONArray jsonArray = jsonObject.getJSONArray("posts");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                RSSItem _items = new RSSItem();
+                JSONObject jsonObject0 = jsonArray.getJSONObject(i);
+                _items.setTitle(jsonObject0.getString("Onvan"));
+                _items.setProvince(jsonObject0.getString("Ostan"));
+                _items.setCity(jsonObject0.getString("Shahr"));
+                _items.setRegion(jsonObject0.getString("Mantaghe"));
+                _items.setCategory(jsonObject0.getString("Cats"));
+                _items.setDesc(jsonObject0.getString("Tozih"));
                 _items.setId(jsonObject0.getString("Id"));
                 _items.setThumb(jsonObject0.getString("Thumb"));
                 _feed.addItem(_items);
